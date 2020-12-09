@@ -1,6 +1,6 @@
 ## octoDNS DDNS
 
-A simple Dynamic DNS source for [octoDNS](https://github.com/github/octodns/).
+A simple Dynamic DNS source for [octoDNS](https://github.com/octodns/octodns/).
 
 Supports both IPv4 and IPv6 addresses. Generally useful when you have a zone
 with staticly configured records but would also like to include a dynamic

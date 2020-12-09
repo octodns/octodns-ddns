@@ -25,6 +25,6 @@ setup(
     long_description=open('README.md').read(),
     name='octodns-ddns',
     packages=find_packages(),
-    url='https://github.com/ross/octodns-ddns',
+    url='https://github.com/octodns/octodns-ddns',
     version=octodns_ddns.__VERSION__,
 )
