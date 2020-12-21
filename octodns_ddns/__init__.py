@@ -6,7 +6,8 @@ with staticly configured records but would also like to include a dynamic
 record, e.g. for your office or home on a non-fixed IP address.
 '''
 
-from requests import get
+import requests
+
 from logging import getLogger
 
 from octodns.record import Record
@@ -35,7 +36,7 @@ class DdnsSource(BaseSource):
     def populate(self, zone, target=False):
 
         for _type in self.types:
-            addr = get(self.urls[_type]).text
+            addr = requests.get(self.urls[_type]).text
 
             if addr:
                 record = Record.new(zone, self.id, {
