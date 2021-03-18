@@ -56,6 +56,7 @@ class DdnsSource(BaseSource):
             addr = self._get_addr(_type)
             if isinstance(addr, bytes):
                 addr = addr.decode('utf-8')
+                addr = addr.strip('\n')
             if addr:
                 record = Record.new(zone, self.id, {
                     'ttl': self.ttl,
