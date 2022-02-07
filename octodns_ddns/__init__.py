@@ -16,7 +16,7 @@ from logging import getLogger
 from octodns.record import Record
 from octodns.source.base import BaseSource
 
-__VERSION__ = '0.2.0'
+__VERSION__ = '0.2.1'
 
 
 class DdnsSource(BaseSource):
@@ -44,7 +44,7 @@ class DdnsSource(BaseSource):
             raise Exception('Failed to get ip address for type={}'
                             .format(_type))
         resp.raise_for_status()
-        addr = resp.content
+        addr = resp.content.decode('utf-8')
         self.log.info('_get_addr: type=%s is %s', _type, addr)
         return addr
 
