@@ -12,8 +12,8 @@ from octodns_ddns import DdnsSource
 
 class MockResponse(object):
 
-    def __init__(self, content=None, raise_for_status=False):
-        self.content = content
+    def __init__(self, content='', raise_for_status=False):
+        self.content = bytes(content, 'utf-8')
         self._raise_for_status = raise_for_status
 
     def raise_for_status(self):
