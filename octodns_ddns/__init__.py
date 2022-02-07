@@ -16,7 +16,7 @@ from logging import getLogger
 from octodns.record import Record
 from octodns.source.base import BaseSource
 
-__VERSION__ = '0.2.0'
+__VERSION__ = '0.1'
 
 
 class DdnsSource(BaseSource):
