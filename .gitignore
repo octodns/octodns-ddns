@@ -1,6 +1,12 @@
+*.pyc
+.coverage
 .eggs/
-build/
+.env
+/build/
+/config/
+coverage.xml
 dist/
 env/
-*.egg-info/
-*.pyc
+htmlcov/
+nosetests.xml
+octodns_*.egg-info/

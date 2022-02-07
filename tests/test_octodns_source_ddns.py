@@ -2,9 +2,10 @@
 #
 #
 
-from mock import call, patch
 from octodns.zone import Zone
+from requests.exceptions import ConnectionError
 from unittest import TestCase
+from unittest.mock import call, patch
 
 from octodns_ddns import DdnsSource
 
@@ -25,7 +26,7 @@ class TestDdnsSource(TestCase):
     @patch('requests.Session.get')
     def test_defaults(self, mock):
         a_value = '1.2.3.4'
-        aaaa_value = '2001:0db8:85a3:0000:0000:8a2e:0370:7334'
+        aaaa_value = '2001:db8:85a3::8a2e:370:7334'
         mock.side_effect = [
             MockResponse(a_value),
             MockResponse(aaaa_value)
@@ -34,11 +35,11 @@ class TestDdnsSource(TestCase):
         zone = Zone('example.com.', [])
         DdnsSource('dynamic').populate(zone)
         records = sorted(list(zone.records))
-        self.assertEquals(2, len(records))
+        self.assertEqual(2, len(records))
         a = records[0]
-        self.assertEquals([a_value], a.values)
+        self.assertEqual([a_value], a.values)
         aaaa = records[1]
-        self.assertEquals([aaaa_value], aaaa.values)
+        self.assertEqual([aaaa_value], aaaa.values)
 
         mock.assert_has_calls([
             call('https://v4.ident.me/'),
@@ -52,8 +53,32 @@ class TestDdnsSource(TestCase):
         ]
         zone = Zone('example.com.', [])
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(Exception) as ctx:
             DdnsSource('dynamic').populate(zone)
+        self.assertEqual('boom', str(ctx.exception))
+
+    @patch('requests.Session.get')
+    def test_connection_error(self, mock):
+        mock.side_effect = [
+            ConnectionError('this is a test')
+        ]
+        zone = Zone('example.com.', [])
+
+        with self.assertRaises(Exception) as ctx:
+            DdnsSource('dynamic').populate(zone)
+        self.assertEqual('Failed to get ip address for type=A',
+                         str(ctx.exception))
+
+    @patch('requests.Session.get')
+    def test_empty_response(self, mock):
+        mock.side_effect = [
+            MockResponse(content=''),
+            MockResponse(content=''),
+        ]
+        zone = Zone('example.com.', [])
+
+        DdnsSource('dynamic').populate(zone)
+        self.assertEquals(0, len(zone.records))
 
     @patch('requests.Session.get')
     def test_types_a(self, mock):
@@ -64,7 +89,7 @@ class TestDdnsSource(TestCase):
 
         zone = Zone('example.com.', [])
         DdnsSource('dynamic', types=('A',)).populate(zone)
-        self.assertEquals(1, len(zone.records))
+        self.assertEqual(1, len(zone.records))
 
         mock.assert_has_calls([
             call('https://v4.ident.me/'),
@@ -73,14 +98,14 @@ class TestDdnsSource(TestCase):
 
     @patch('requests.Session.get')
     def test_types_aaaa(self, mock):
-        aaaa_value = '2001:0db8:85a3:0000:0000:8a2e:0370:7334'
+        aaaa_value = '2001:db8:85a3::8a2e:370:7334'
         mock.side_effect = [
             MockResponse(aaaa_value),
         ]
 
         zone = Zone('example.com.', [])
         DdnsSource('dynamic', types=('AAAA',)).populate(zone)
-        self.assertEquals(1, len(zone.records))
+        self.assertEqual(1, len(zone.records))
 
         mock.assert_has_calls([
             call('https://v6.ident.me/'),
@@ -90,7 +115,7 @@ class TestDdnsSource(TestCase):
     @patch('requests.Session.get')
     def test_urls(self, mock):
         a_value = '1.2.3.4'
-        aaaa_value = '2001:0db8:85a3:0000:0000:8a2e:0370:7334'
+        aaaa_value = '2001:db8:85a3::8a2e:370:7334'
         mock.side_effect = [
             MockResponse(a_value),
             MockResponse(aaaa_value)
@@ -102,11 +127,11 @@ class TestDdnsSource(TestCase):
             'AAAA': 'https://foo.bar/v6',
         }).populate(zone)
         records = sorted(list(zone.records))
-        self.assertEquals(2, len(records))
+        self.assertEqual(2, len(records))
         a = records[0]
-        self.assertEquals([a_value], a.values)
+        self.assertEqual([a_value], a.values)
         aaaa = records[1]
-        self.assertEquals([aaaa_value], aaaa.values)
+        self.assertEqual([aaaa_value], aaaa.values)
 
         mock.assert_has_calls([
             call('https://foo.bar/v4'),
