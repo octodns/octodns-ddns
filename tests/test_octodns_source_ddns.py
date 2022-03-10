@@ -78,7 +78,7 @@ class TestDdnsSource(TestCase):
         zone = Zone('example.com.', [])
 
         DdnsSource('dynamic').populate(zone)
-        self.assertEquals(0, len(zone.records))
+        self.assertEqual(0, len(zone.records))
 
     @patch('requests.Session.get')
     def test_types_a(self, mock):
