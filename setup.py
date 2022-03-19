@@ -21,7 +21,6 @@ tests_require = (
     'pytest',
     'pytest-cov',
     'pytest-network',
-    # TODO: other test-time requirements
 )
 
 setup(
