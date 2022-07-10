@@ -6,8 +6,12 @@ with staticly configured records but would also like to include a dynamic
 record, e.g. for your office or home on a non-fixed IP address.
 '''
 
-from __future__ import absolute_import, division, print_function, \
-    unicode_literals
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
 
 from requests import Session
 from requests.exceptions import ConnectionError
@@ -31,7 +35,7 @@ class DdnsSource(BaseSource):
         self.ttl = ttl
         self.urls = {
             'A': urls.get('A', 'https://v4.ident.me/'),
-            'AAAA': urls.get('AAAA', 'https://v6.ident.me/')
+            'AAAA': urls.get('AAAA', 'https://v6.ident.me/'),
         }
 
         self._sess = Session()
@@ -41,8 +45,9 @@ class DdnsSource(BaseSource):
         try:
             resp = self._sess.get(self.urls[_type])
         except ConnectionError:
-            raise Exception('Failed to get ip address for type={}'
-                            .format(_type))
+            raise Exception(
+                'Failed to get ip address for type={}'.format(_type)
+            )
         resp.raise_for_status()
         addr = resp.content.decode('utf-8')
         self.log.info('_get_addr: type=%s is %s', _type, addr)
@@ -55,12 +60,14 @@ class DdnsSource(BaseSource):
         for _type in self.types:
             addr = self._get_addr(_type)
             if addr:
-                record = Record.new(zone, self.id, {
-                    'ttl': self.ttl,
-                    'type': _type,
-                    'value': addr
-                }, source=self)
+                record = Record.new(
+                    zone,
+                    self.id,
+                    {'ttl': self.ttl, 'type': _type, 'value': addr},
+                    source=self,
+                )
                 zone.add_record(record)
 
-        self.log.info('populate:   found %s records',
-                      len(zone.records) - before)
+        self.log.info(
+            'populate:   found %s records', len(zone.records) - before
+        )
