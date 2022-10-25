@@ -30,7 +30,7 @@ class DdnsSource(BaseSource):
     def __init__(self, id, types=('A', 'AAAA'), urls={}, ttl=60):
         self.log = getLogger('DdnsSource[{}]'.format(id))
         self.log.debug('__init__: id=%s, types=%s, ttl=%d', id, types, ttl)
-        super(DdnsSource, self).__init__(id)
+        super().__init__(id)
         self.types = types
         self.ttl = ttl
         self.urls = {
