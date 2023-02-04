@@ -13,9 +13,10 @@ from __future__ import (
     unicode_literals,
 )
 
+from logging import getLogger
+
 from requests import Session
 from requests.exceptions import ConnectionError
-from logging import getLogger
 
 from octodns.record import Record
 from octodns.source.base import BaseSource
