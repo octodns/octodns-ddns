@@ -2,10 +2,12 @@
 #
 #
 
-from octodns.zone import Zone
-from requests.exceptions import ConnectionError
 from unittest import TestCase
 from unittest.mock import call, patch
+
+from requests.exceptions import ConnectionError
+
+from octodns.zone import Zone
 
 from octodns_ddns import DdnsSource
 
