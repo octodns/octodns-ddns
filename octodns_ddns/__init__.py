@@ -18,6 +18,7 @@ from logging import getLogger
 from requests import Session
 from requests.exceptions import ConnectionError
 
+from octodns import __VERSION__ as octodns_version
 from octodns.record import Record
 from octodns.source.base import BaseSource
 
@@ -40,6 +41,11 @@ class DdnsSource(BaseSource):
         }
 
         self._sess = Session()
+        self._sess.headers.update(
+            {
+                'User-Agent': f'octodns/{octodns_version} octodns-ddns/{__VERSION__}'
+            }
+        )
 
     def _get_addr(self, _type):
         self.log.debug('_get_addr: type=%s', _type)
