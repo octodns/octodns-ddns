@@ -22,7 +22,8 @@ from octodns import __VERSION__ as octodns_version
 from octodns.record import Record
 from octodns.source.base import BaseSource
 
-__VERSION__ = '0.2.1'
+# TODO: remove __VERSION__ with the next major version release
+__version__ = __VERSION__ = '0.2.1'
 
 
 class DdnsSource(BaseSource):
