@@ -61,7 +61,7 @@ class DdnsSource(BaseSource):
         self.log.info('_get_addr: type=%s is %s', _type, addr)
         return addr
 
-    def populate(self, zone, target=False):
+    def populate(self, zone, target=False, lenient=False):
         self.log.debug('populate: zone=%s', zone.name)
         before = len(zone.records)
 
