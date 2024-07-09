@@ -35,4 +35,4 @@ requests-toolbelt==1.0.0
 rfc3986==2.0.0
 rich==13.7.1
 twine==5.1.0
-zipp==3.19.0
+zipp==3.19.1
