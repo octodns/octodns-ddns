@@ -88,9 +88,21 @@ can configure `urls` with `a` and/or `aaaa` with urls that return the address
 as the content of the response.
 
 ```yaml
-  dynamic:
-    class: octodns_ddns.DdnsSource
-    urls:
-      A: https://v4.ident.me/
-      AAAA: https://v6.ident.me/
+dynamic:
+  class: octodns_ddns.DdnsSource
+  urls:
+    # Defaults:
+    A: https://api.idify.org/
+    AAAA: https://api6.idify.org/
 ```
+
+#### Alternatives
+
+The following have been tested and confirmed to work as of the time they were added to this document.
+
+| Service                                | IPv4 URL                      | IPv6 URL                      |
+| :------------------------------------- | :---------------------------- | :---------------------------- |
+| [ipify.org](https://www.ipify.org)     | `https://api.ipify.org`       | `https://api6.ipify.org`      |
+| [icanhazip.com](https://icanhazip.com) | `https://ipv4.icanhazip.com`  | `https://ipv6.icanhazip.com`  |
+| [ipinfo.io](https://ipinfo.io)         | `https://v4.api.ipinfo.io/ip` | `https://v6.api.ipinfo.io/ip` |
+| [ident.me](https://ident.me)           | `https://v4.ident.me/`        | `https://v6.ident.me/`        |

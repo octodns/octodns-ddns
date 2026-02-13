@@ -39,7 +39,7 @@ class TestDdnsSource(TestCase):
         self.assertEqual([aaaa_value], aaaa.values)
 
         mock.assert_has_calls(
-            [call('https://v4.ident.me/'), call('https://v6.ident.me/')]
+            [call('https://api.ipify.org/'), call('https://api6.ipify.org/')]
         )
 
     @patch('requests.Session.get')
@@ -79,7 +79,7 @@ class TestDdnsSource(TestCase):
         DdnsSource('dynamic', types=('A',)).populate(zone)
         self.assertEqual(1, len(zone.records))
 
-        mock.assert_has_calls([call('https://v4.ident.me/')])
+        mock.assert_has_calls([call('https://api.ipify.org/')])
         mock.assert_called_once()
 
     @patch('requests.Session.get')
@@ -91,7 +91,7 @@ class TestDdnsSource(TestCase):
         DdnsSource('dynamic', types=('AAAA',)).populate(zone)
         self.assertEqual(1, len(zone.records))
 
-        mock.assert_has_calls([call('https://v6.ident.me/')])
+        mock.assert_has_calls([call('https://api6.ipify.org/')])
         mock.assert_called_once()
 
     @patch('requests.Session.get')
