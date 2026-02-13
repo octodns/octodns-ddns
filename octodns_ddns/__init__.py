@@ -37,8 +37,8 @@ class DdnsSource(BaseSource):
         self.types = types
         self.ttl = ttl
         self.urls = {
-            'A': urls.get('A', 'https://v4.ident.me/'),
-            'AAAA': urls.get('AAAA', 'https://v6.ident.me/'),
+            'A': urls.get('A', 'https://api.ipify.org/'),
+            'AAAA': urls.get('AAAA', 'https://api6.ipify.org/'),
         }
 
         self._sess = Session()
