@@ -1,3 +1,8 @@
+## 0.4.0 - 2026-05-14
+
+Minor:
+* Add list_zones support to allow using in dynamic zones - [#69](https://github.com/octodns/octodns-ddns/pull/69)
+
 ## 0.3.0 - 2026-02-13
 
 Minor:
