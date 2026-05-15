@@ -115,3 +115,7 @@ class TestDdnsSource(TestCase):
         mock.assert_has_calls(
             [call('https://foo.bar/v4'), call('https://foo.bar/v6')]
         )
+
+    def test_list_zones(self):
+        source = DdnsSource('dynamic')
+        self.assertEqual([], source.list_zones())

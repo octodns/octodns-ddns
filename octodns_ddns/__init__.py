@@ -48,6 +48,9 @@ class DdnsSource(BaseSource):
             }
         )
 
+    def list_zones(self):
+        return []
+
     def _get_addr(self, _type):
         self.log.debug('_get_addr: type=%s', _type)
         try:
